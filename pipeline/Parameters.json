@@ -1,0 +1,100 @@
+{
+	"name": "Parameters",
+	"properties": {
+		"activities": [
+			{
+				"name": "Parameters",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DSParameters",
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcefile": {
+								"value": "@pipeline().parameters.sourcename",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DStargetperameter",
+						"type": "DatasetReference",
+						"parameters": {
+							"targetfilename": {
+								"value": "@pipeline().parameters.sinknmae",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"sourcename": {
+				"type": "string",
+				"defaultValue": "user.csv"
+			},
+			"sinknmae": {
+				"type": "string",
+				"defaultValue": "customer.csv"
+			}
+		},
+		"variables": {
+			"source": {
+				"type": "String",
+				"defaultValue": "user.csv"
+			},
+			"sink": {
+				"type": "String",
+				"defaultValue": "tds.csv"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-31T08:38:26Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
