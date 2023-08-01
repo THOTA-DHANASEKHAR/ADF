@@ -1,0 +1,44 @@
+{
+	"name": "shopsource2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "orders.xlsx",
+				"folderPath": "shop",
+				"container": "container001"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "OrderID",
+				"type": "String"
+			},
+			{
+				"name": "CustomerID",
+				"type": "String"
+			},
+			{
+				"name": "OrderDate",
+				"type": "String"
+			},
+			{
+				"name": "ShipperID",
+				"type": "String"
+			},
+			{
+				"name": "address",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

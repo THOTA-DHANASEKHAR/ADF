@@ -1,0 +1,25 @@
+{
+	"name": "DSmetadataoutput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "metadatacopy.csv",
+				"folderPath": "output/getmeta",
+				"container": "container001"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

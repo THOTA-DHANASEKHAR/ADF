@@ -1,0 +1,22 @@
+{
+	"name": "shopsource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "customer.xlsx",
+				"folderPath": "shop",
+				"container": "container001"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

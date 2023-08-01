@@ -1,0 +1,46 @@
+{
+	"name": "DS1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "customer.csv",
+				"folderPath": "shop",
+				"container": "container001"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "DOD",
+				"type": "String"
+			},
+			{
+				"name": "Mobile Number",
+				"type": "String"
+			},
+			{
+				"name": "Email",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
