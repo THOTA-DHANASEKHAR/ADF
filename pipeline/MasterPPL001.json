@@ -1,0 +1,43 @@
+{
+	"name": "MasterPPL001",
+	"properties": {
+		"activities": [
+			{
+				"name": "EPPL001",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SlavePPL001",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "EPPL002",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "EPPL001",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SlavePPL002",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-08-04T06:45:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
