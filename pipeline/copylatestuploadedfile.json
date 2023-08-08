@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "copylatestuploadedfile",
 	"properties": {
 		"activities": [
 			{
@@ -58,43 +58,23 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@and(startswith(item().name,'EMP_' ), endswith(item().name,'.csv'))\n",
+									"value": "@greater(item().name,variables('referencefilename'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Append variable2",
-										"type": "AppendVariable",
-										"dependsOn": [],
-										"userProperties": [],
-										"typeProperties": {
-											"variableName": "filenames",
-											"value": {
-												"value": "@int(replace(replace(item().name,'EMP_','' ),'.csv',''))",
-												"type": "Expression"
-											}
-										}
-									},
-									{
-										"name": "Set variable2",
+										"name": "Set variable1",
 										"type": "SetVariable",
-										"dependsOn": [
-											{
-												"activity": "Append variable2",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
+										"dependsOn": [],
 										"policy": {
 											"secureOutput": false,
 											"secureInput": false
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "max",
+											"variableName": "referencefilename",
 											"value": {
-												"value": "@concat('EMP_',string(max(variables('filenames'))),'.csv')",
+												"value": "@item().name",
 												"type": "Expression"
 											}
 										}
@@ -159,11 +139,11 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DSoutput",
+						"referenceName": "DSlatestfile001",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": {
-								"value": "@variables('max')",
+							"latestupdatedfile": {
+								"value": "@variables('referencefilename')",
 								"type": "Expression"
 							}
 						}
@@ -171,25 +151,20 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText1",
+						"referenceName": "DSLMoutput003",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"variables": {
-			"filenames": {
-				"type": "Array"
-			},
-			"abc": {
-				"type": "Array"
-			},
-			"max": {
-				"type": "String"
+			"referencefilename": {
+				"type": "String",
+				"defaultValue": "EMP_19990619012925.csv"
 			}
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-08-05T06:17:28Z"
+		"lastPublishTime": "2023-08-05T03:26:03Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

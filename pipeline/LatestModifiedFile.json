@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "LatestModifiedFile",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "GetChildFileNames",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DSLMfolderlatestuploded",
+						"referenceName": "DSLMfilder001",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -37,7 +37,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "GetChildFileNames",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -46,55 +46,79 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('GetChildFileNames').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
+							"name": "Get Metadata1",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DSLMFile002",
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"itemName",
+									"lastModified"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							}
+						},
+						{
 							"name": "If Condition1",
 							"type": "IfCondition",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Get Metadata1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@and(startswith(item().name,'EMP_' ), endswith(item().name,'.csv'))\n",
+									"value": "@greater(activity('Get Metadata1').output.lastModified,variables('LMFTime'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Append variable2",
-										"type": "AppendVariable",
-										"dependsOn": [],
-										"userProperties": [],
-										"typeProperties": {
-											"variableName": "filenames",
-											"value": {
-												"value": "@int(replace(replace(item().name,'EMP_','' ),'.csv',''))",
-												"type": "Expression"
-											}
-										}
-									},
-									{
-										"name": "Set variable2",
+										"name": "file",
 										"type": "SetVariable",
-										"dependsOn": [
-											{
-												"activity": "Append variable2",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
+										"dependsOn": [],
 										"policy": {
 											"secureOutput": false,
 											"secureInput": false
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"variableName": "max",
+											"variableName": "LMFile",
 											"value": {
-												"value": "@concat('EMP_',string(max(variables('filenames'))),'.csv')",
+												"value": "@activity('Get Metadata1').output.itemName",
 												"type": "Expression"
 											}
 										}
@@ -144,7 +168,7 @@
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
 							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"fileExtension": ".csv"
 						}
 					},
 					"enableStaging": false,
@@ -159,11 +183,11 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DSoutput",
+						"referenceName": "DSLMFile002",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": {
-								"value": "@variables('max')",
+								"value": "@variables('LMFile')",
 								"type": "Expression"
 							}
 						}
@@ -171,25 +195,23 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText1",
+						"referenceName": "DSLMoutput003",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"variables": {
-			"filenames": {
-				"type": "Array"
-			},
-			"abc": {
-				"type": "Array"
-			},
-			"max": {
+			"LMFile": {
 				"type": "String"
+			},
+			"LMFTime": {
+				"type": "String",
+				"defaultValue": "0000-00-04T06:29:13Z"
 			}
 		},
 		"annotations": [],
-		"lastPublishTime": "2023-08-05T06:17:28Z"
+		"lastPublishTime": "2023-08-04T13:33:05Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
