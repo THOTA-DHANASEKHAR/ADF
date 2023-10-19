@@ -1,0 +1,19 @@
+{
+	"name": "O11",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "out1",
+				"fileSystem": "output"
+			}
+		},
+		"schema": {}
+	}
+}

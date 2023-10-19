@@ -1,0 +1,210 @@
+{
+	"name": "stored procedure",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "s11",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "O11",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "starttime",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[ETLPROCEDURE]",
+					"storedProcedureParameters": {
+						"CopyDuration": {
+							"value": "",
+							"type": "String"
+						},
+						"DataFactoryName": {
+							"value": {
+								"value": "@pipeline().DataFactory",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Error_Details": {
+							"value": null,
+							"type": "String"
+						},
+						"IRName": {
+							"value": {
+								"value": "@activity('Copy data1').output.effectiveIntegrationRuntime",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"ObjectName": {
+							"value": null,
+							"type": "String"
+						},
+						"Pipeline_Name": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PipelineRunID": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PlEndTime": {
+							"value": {
+								"value": "@utcnow()",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PlStartTime": {
+							"value": {
+								"value": "@variables('starttime')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"RowsCopied": {
+							"value": {
+								"value": "@activity('Copy data1').output.rowsCopied",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"RowsRead": {
+							"value": {
+								"value": "@activity('Copy data1').output.RowsRead",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"SourceType": {
+							"value": "srinath",
+							"type": "String"
+						},
+						"Status": {
+							"value": "good",
+							"type": "String"
+						},
+						"TargetName": {
+							"value": null,
+							"type": "String"
+						},
+						"TargetPath": {
+							"value": null,
+							"type": "String"
+						},
+						"TargetType": {
+							"value": null,
+							"type": "String"
+						},
+						"ThroughPut": {
+							"value": {
+								"value": "@activity('Copy data1').output.throughput",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LSASD1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"variables": {
+			"starttime": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-09T10:40:35Z"
+	}
+}
