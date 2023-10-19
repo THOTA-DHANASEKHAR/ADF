@@ -1,0 +1,19 @@
+{
+	"name": "ADL_DS_MERGE_IN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSASD1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "MERGE"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EMP_SRC"
+		}
+	}
+}

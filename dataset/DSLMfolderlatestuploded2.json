@@ -1,0 +1,23 @@
+{
+	"name": "DSLMfolderlatestuploded2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "INFOLDER",
+				"container": "storage"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

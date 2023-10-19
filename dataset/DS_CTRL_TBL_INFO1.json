@@ -1,0 +1,19 @@
+{
+	"name": "DS_CTRL_TBL_INFO1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSASD1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dynamic_content_load_from_oracle"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Control_Tbl_Info"
+		}
+	}
+}

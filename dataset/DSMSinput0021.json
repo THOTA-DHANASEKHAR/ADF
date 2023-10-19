@@ -1,0 +1,45 @@
+{
+	"name": "DSMSinput0021",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureBlobStorage001",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "abc2.csv",
+				"folderPath": "INPUT",
+				"container": "storage"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ORDER_ID",
+				"type": "String"
+			},
+			{
+				"name": "ORDER_DATETIME",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_ID",
+				"type": "String"
+			},
+			{
+				"name": "ORDER_STATUS",
+				"type": "String"
+			},
+			{
+				"name": "STORE_ID",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,524 @@
+{
+	"name": "dynamicfilecopyfromoracle",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "start_time",
+					"value": {
+						"value": "@utcnow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FilenamesLookup",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT * FROM dbo.Control_Tbl_Info where SourceType = 'Oracle' AND ActiveStatus= 1;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_CTRL_TBL_INFO",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Access_each_filename",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FilenamesLookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FilenamesLookup').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "PathInfo",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "PathInfo",
+								"value": {
+									"value": "@concat('OUTPUT','/', formatDateTime(utcnow(), 'yyyy'),'/', formatDateTime(utcnow(), 'MM'),'/', formatDateTime(utcnow(), 'dd'))\n",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "File_Info",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "individual_file_ex_strt_time",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FilenameInfo",
+								"value": {
+									"value": "@concat(item().SourceObjectName,'_',formatDateTime(utcnow(),'yyyMMddHHmmss'),'.csv')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "File_Info",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "oracledynamiccopy",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().SourceObjectName",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "dynamic_files_copy_output_DS_azure_Blob",
+									"type": "DatasetReference",
+									"parameters": {
+										"filepath": {
+											"value": "@variables('PathInfo')",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@variables('FilenameInfo')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "SPLogsUpdate",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[SP_ETLLog]",
+								"storedProcedureParameters": {
+									"CopyDuration": {
+										"value": {
+											"value": "@activity('Copy data1').output.copyDuration\n",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"DataFactoryName": {
+										"value": {
+											"value": "@pipeline().DataFactory",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"Error_Details": {
+										"value": null,
+										"type": "String"
+									},
+									"IRName": {
+										"value": {
+											"value": "@activity('Copy data1').output.effectiveIntegrationRuntime",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"ObjectName": {
+										"value": "HR.JOBS",
+										"type": "String"
+									},
+									"Pipeline_Name": {
+										"value": {
+											"value": "@pipeline().Pipeline",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PipelineRunID": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PlEndTime": {
+										"value": {
+											"value": "@concat(formatDateTime(utcnow(), 'yyy-MMM-dd HH:mm:ss'))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PlStartTime": {
+										"value": {
+											"value": "@variables('individual_start_time')",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"RowsCopied": {
+										"value": {
+											"value": "@activity('Copy data1').output.rowsCopied",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"RowsRead": {
+										"value": {
+											"value": "@activity('Copy data1').output.rowsRead",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"SourceType": {
+										"value": "Oracle",
+										"type": "String"
+									},
+									"Status": {
+										"value": "Success",
+										"type": "String"
+									},
+									"TargetName": {
+										"value": {
+											"value": "@variables('FilenameInfo')",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TargetPath": {
+										"value": {
+											"value": "@variables('PathInfo')",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TargetType": {
+										"value": "ADLS",
+										"type": "String"
+									},
+									"ThroughPut": {
+										"value": {
+											"value": "@activity('Copy data1').output.throughput",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LSASD1",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "individual_file_ex_strt_time",
+							"description": "",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "PathInfo",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "individual_start_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "ExecutionUpdate",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "SPLogsUpdate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[Recovery]",
+								"storedProcedureParameters": {
+									"SourceObjectName": {
+										"value": {
+											"value": "@item().SourceObjectName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"SourceType": {
+										"value": {
+											"value": "@item().SourceType",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LSASD1",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Stored procedure1_copy1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Access_each_filename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_ETLLog]",
+					"storedProcedureParameters": {
+						"CopyDuration": {
+							"value": null,
+							"type": "String"
+						},
+						"DataFactoryName": {
+							"value": {
+								"value": "@pipeline().DataFactory",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Error_Details": {
+							"value": null,
+							"type": "String"
+						},
+						"IRName": {
+							"value": null,
+							"type": "String"
+						},
+						"ObjectName": {
+							"value": "HR.JOBS",
+							"type": "String"
+						},
+						"Pipeline_Name": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PipelineRunID": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PlEndTime": {
+							"value": {
+								"value": "@concat(formatDateTime(utcnow(), 'yyy-MMM-dd HH:mm:ss'))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"PlStartTime": {
+							"value": {
+								"value": "@variables('start_time')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"RowsCopied": {
+							"value": null,
+							"type": "String"
+						},
+						"RowsRead": {
+							"value": null,
+							"type": "String"
+						},
+						"SourceType": {
+							"value": null,
+							"type": "String"
+						},
+						"Status": {
+							"value": "Success",
+							"type": "String"
+						},
+						"TargetName": {
+							"value": null,
+							"type": "String"
+						},
+						"TargetPath": {
+							"value": null,
+							"type": "String"
+						},
+						"TargetType": {
+							"value": null,
+							"type": "String"
+						},
+						"ThroughPut": {
+							"value": null,
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LSASD1",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"variables": {
+			"start_time": {
+				"type": "String"
+			},
+			"FilenameInfo": {
+				"type": "String"
+			},
+			"PathInfo": {
+				"type": "String"
+			},
+			"individual_start_time": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-09T02:29:06Z"
+	}
+}
