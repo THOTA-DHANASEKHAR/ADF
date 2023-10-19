@@ -1,0 +1,26 @@
+{
+	"name": "DS_DELTA_EXTRACT_OUTPUT1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DELTA_EXTRACTION"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "delta",
+				"fileSystem": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

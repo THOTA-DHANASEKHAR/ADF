@@ -1,0 +1,180 @@
+{
+	"name": "PPL_DELTA_EXTRACTION",
+	"properties": {
+		"activities": [
+			{
+				"name": "L_LOGTBL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select MAX(WatermarkValue) as Logtime from [dbo].[ETLLog] WHERE Status='Success';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DELTA_EXTRACTION_LOGTBL_INPUT",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "IncrementalCopyActivity",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "L_LOGTBL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "L_M_TBL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT *\nFROM [dbo].[data_source_table]\nWHERE LastModifytime > '@{activity('L_LOGTBL').output.firstRow.Logtime}' and LastModifytime <= '@{activity('L_M_TBL').output.firstRow.L_S_time}'\n\n\n",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_DELTA_EXTRACTION_MAINTBL_INPUT1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_DELTA_EXTRACT_OUTPUT1",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "IncrementalCopyActivity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_ETLLog]",
+					"storedProcedureParameters": {
+						"Status": {
+							"value": "Success",
+							"type": "String"
+						},
+						"TableName": {
+							"value": "data_source_table",
+							"type": "String"
+						},
+						"WatermarkValue": {
+							"value": {
+								"value": "@activity('L_M_TBL').output.firstRow.L_S_time\r\n",
+								"type": "Expression"
+							},
+							"type": "DateTime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LSASD1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "L_M_TBL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(LastModifytime) as L_S_time from [dbo].[data_source_table];\n",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DELTA_EXTRACTION_MAINTBL_INPUT1",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"variables": {
+			"starttime": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-12T03:29:45Z"
+	}
+}
