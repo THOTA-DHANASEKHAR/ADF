@@ -1,0 +1,21 @@
+{
+	"name": "sqldwAdventureWorksDestTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqldwAdventureWorksDestination",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "String"
+			}
+		},
+		"type": "AzureSqlDWTable",
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "sqlAdventureWorksSourceTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sqlAdventureWorksSource",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "String"
+			}
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
