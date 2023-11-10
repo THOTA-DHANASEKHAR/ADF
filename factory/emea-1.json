@@ -1,0 +1,9 @@
+{
+	"name": "emea-1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ed165baa-a3a8-4b3d-ac5e-7582ea90ce9e",
+		"tenantId": "7b1c5f44-3691-4f73-ba23-5c47aff2b82f"
+	}
+}
