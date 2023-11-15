@@ -1,0 +1,14 @@
+{
+	"name": "Microsoft3651",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Office365",
+		"typeProperties": {
+			"office365TenantId": "7b1c5f44-3691-4f73-ba23-5c47aff2b82f",
+			"servicePrincipalTenantId": "7b1c5f44-3691-4f73-ba23-5c47aff2b82f",
+			"servicePrincipalId": "tdsserver1",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDcxN0U3NkQ1LTZDQzAtNDdDMi1BOTk0LUUyNjZGREREQTZCQV9iMWZlZmIwYy04ZTBmLTRkMDYtOTZhMC0zOTgxNDgzYjg1YmUiDQp9"
+		}
+	}
+}
