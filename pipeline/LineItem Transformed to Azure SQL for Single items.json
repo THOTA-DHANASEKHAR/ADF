@@ -15,15 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "LineItemCleanFlow",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"source1": {
-								"fileName": "h_lineitem_part53.csv"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -75,8 +66,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -85,8 +75,7 @@
 								},
 								"sink": {
 									"name": "partkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -95,8 +84,7 @@
 								},
 								"sink": {
 									"name": "suppkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -105,8 +93,7 @@
 								},
 								"sink": {
 									"name": "linenumber",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -115,8 +102,7 @@
 								},
 								"sink": {
 									"name": "quantity",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -125,10 +111,7 @@
 								},
 								"sink": {
 									"name": "extendedprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -137,10 +120,7 @@
 								},
 								"sink": {
 									"name": "discount",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -149,10 +129,7 @@
 								},
 								"sink": {
 									"name": "tax",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -161,8 +138,7 @@
 								},
 								"sink": {
 									"name": "returnflag",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -171,8 +147,7 @@
 								},
 								"sink": {
 									"name": "linestatus",
-									"type": "Boolean",
-									"physicalType": "bit"
+									"type": "Boolean"
 								}
 							},
 							{
@@ -181,8 +156,7 @@
 								},
 								"sink": {
 									"name": "shipdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -191,8 +165,7 @@
 								},
 								"sink": {
 									"name": "commitdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -201,8 +174,7 @@
 								},
 								"sink": {
 									"name": "receiptdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -211,8 +183,7 @@
 								},
 								"sink": {
 									"name": "shipinstruct",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -221,8 +192,7 @@
 								},
 								"sink": {
 									"name": "shipmode",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -231,27 +201,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "lineitemFinalCSV",
-						"type": "DatasetReference",
-						"parameters": {
-							"fileName": "h_lineitem_part53.csv"
-						}
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",

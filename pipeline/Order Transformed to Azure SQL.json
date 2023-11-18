@@ -15,33 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "OrderCleanFlow",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"OrderPart1": {
-								"fileName": "h_order_part1.dsv"
-							},
-							"OrderPart2": {
-								"fileName": "h_order_part2.dsv"
-							},
-							"OrderPart3": {
-								"fileName": "h_order_part3.dsv"
-							},
-							"OrderPart4": {
-								"fileName": "h_order_part4.dsv"
-							},
-							"OrderPart5": {
-								"fileName": "h_order_part5.dsv"
-							},
-							"OrderPart6": {
-								"fileName": "h_order_part6.dsv"
-							},
-							"OrderPart7": {
-								"fileName": "h_order_part7.dsv"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -95,8 +68,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -105,8 +77,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -115,8 +86,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -125,10 +95,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -137,8 +104,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -147,8 +113,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -157,8 +122,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -167,8 +131,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -177,24 +140,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -251,8 +202,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -261,8 +211,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -271,8 +220,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -281,10 +229,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -293,8 +238,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -303,8 +247,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -313,8 +256,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -323,8 +265,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -333,24 +274,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -407,8 +336,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -417,8 +345,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -427,8 +354,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -437,10 +363,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -449,8 +372,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -459,8 +381,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -469,8 +390,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -479,8 +399,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -489,24 +408,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -563,8 +470,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -573,8 +479,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -583,8 +488,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -593,10 +497,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -605,8 +506,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -615,8 +515,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -625,8 +524,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -635,8 +533,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -645,24 +542,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -719,8 +604,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -729,8 +613,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -739,8 +622,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -749,10 +631,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -761,8 +640,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -771,8 +649,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -781,8 +658,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -791,8 +667,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -801,24 +676,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -875,8 +738,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -885,8 +747,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -895,10 +756,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -907,8 +765,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -917,8 +774,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -927,8 +783,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -937,8 +792,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -947,8 +801,7 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -956,24 +809,12 @@
 									"name": "O_ORDERSTATUS"
 								},
 								"sink": {
-									"name": "orderstatus",
-									"physicalType": "varchar"
+									"name": "orderstatus"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -1030,8 +871,7 @@
 								},
 								"sink": {
 									"name": "orderkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -1040,8 +880,7 @@
 								},
 								"sink": {
 									"name": "custkey",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -1050,8 +889,7 @@
 								},
 								"sink": {
 									"name": "orderstatus",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -1060,10 +898,7 @@
 								},
 								"sink": {
 									"name": "totalprice",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 4,
-									"precision": 10
+									"type": "Decimal"
 								}
 							},
 							{
@@ -1072,8 +907,7 @@
 								},
 								"sink": {
 									"name": "orderdate",
-									"type": "DateTime",
-									"physicalType": "datetime2"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -1082,8 +916,7 @@
 								},
 								"sink": {
 									"name": "orderpriority",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -1092,8 +925,7 @@
 								},
 								"sink": {
 									"name": "clerk",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							},
 							{
@@ -1102,8 +934,7 @@
 								},
 								"sink": {
 									"name": "shippriority",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "Int32"
 								}
 							},
 							{
@@ -1112,24 +943,12 @@
 								},
 								"sink": {
 									"name": "comment",
-									"type": "String",
-									"physicalType": "varchar"
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "orderFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",

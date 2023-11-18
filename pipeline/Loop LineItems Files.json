@@ -6,6 +6,10 @@
 				"name": "Set Lineitems Files",
 				"type": "SetVariable",
 				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Files",
@@ -103,6 +107,10 @@
 							"name": "Set variable",
 							"type": "SetVariable",
 							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "Name",
@@ -132,18 +140,6 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"dataflow": {
-									"referenceName": "LineItemCleanFlow",
-									"type": "DataFlowReference",
-									"datasetParameters": {
-										"source1": {
-											"fileName": {
-												"value": "@item()",
-												"type": "Expression"
-											}
-										}
-									}
-								},
 								"compute": {
 									"coreCount": 8,
 									"computeType": "General"
@@ -314,27 +310,12 @@
 												"ordinal": 16
 											},
 											"sink": {
-												"name": "comment",
-												"physicalType": "varchar"
+												"name": "comment"
 											}
 										}
-									],
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
+									]
 								}
 							},
-							"inputs": [
-								{
-									"referenceName": "lineitemFinalCSV",
-									"type": "DatasetReference",
-									"parameters": {
-										"fileName": "output_file_cleared.csv"
-									}
-								}
-							],
 							"outputs": [
 								{
 									"referenceName": "AzureSqlOutputTable",

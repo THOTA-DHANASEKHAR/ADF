@@ -15,18 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "PartsuppCleanFlow",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"PartsuppDSV": {
-								"fileName": "h_partsupp_part1.dsv"
-							},
-							"PartsuppDSV2": {
-								"fileName": "h_partsupp_part2.dsv"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -111,24 +99,12 @@
 									"name": "PS_COMMENT"
 								},
 								"sink": {
-									"name": "comment",
-									"physicalType": "varchar"
+									"name": "comment"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "partsuppFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",
@@ -216,24 +192,12 @@
 									"name": "PS_COMMENT"
 								},
 								"sink": {
-									"name": "comment",
-									"physicalType": "varchar"
+									"name": "comment"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
-				"inputs": [
-					{
-						"referenceName": "partsuppFinalDSV",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "AzureSqlOutputTable",

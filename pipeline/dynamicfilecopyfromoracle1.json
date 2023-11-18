@@ -45,10 +45,6 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"dataset": {
-						"referenceName": "DS_CTRL_TBL_INFO1",
-						"type": "DatasetReference"
-					},
 					"firstRowOnly": false
 				}
 			},
@@ -148,15 +144,7 @@
 										"fileExtension": ".txt"
 									}
 								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
 							"inputs": [
 								{
@@ -165,22 +153,6 @@
 									"parameters": {
 										"TableName": {
 											"value": "@item().SourceObjectName",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "dynamic_files_copy_output_DS_azure_Blob1",
-									"type": "DatasetReference",
-									"parameters": {
-										"filepath": {
-											"value": "@variables('PathInfo')",
-											"type": "Expression"
-										},
-										"filename": {
-											"value": "@variables('FilenameInfo')",
 											"type": "Expression"
 										}
 									}
