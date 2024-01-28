@@ -1,9 +1,9 @@
 {
-	"name": "Parameterize_Activity",
+	"name": "pl_merge multiple csv to single csv",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "copy data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -18,8 +18,9 @@
 					"source": {
 						"type": "DelimitedTextSource",
 						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
+							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -29,7 +30,8 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "MergeFiles"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -49,34 +51,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Parameterize_Activity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "source_merge_multiple_csv_2_single_csv",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Target_Parameterize_Activity",
+						"referenceName": "Target_merge_multiple_csv_2_single_csv",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Parameterize_Activity"
+			"name": "Merge_multiple_csv_2_single_csv"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T17:29:04Z"
+		"lastPublishTime": "2024-01-27T08:44:03Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

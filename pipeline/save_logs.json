@@ -1,5 +1,5 @@
 {
-	"name": "stored procedure",
+	"name": "save_logs",
 	"properties": {
 		"description": "select * from [dbo].[ETLLogTBL]",
 		"activities": [
@@ -47,13 +47,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "source_stored_procedure",
+						"referenceName": "source_save_logs",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "target_stored_procedure",
+						"referenceName": "target_save_logs",
 						"type": "DatasetReference"
 					}
 				]
@@ -255,10 +255,10 @@
 			}
 		},
 		"folder": {
-			"name": "stored procedure"
+			"name": "save_logs"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T15:41:25Z"
+		"lastPublishTime": "2024-01-27T16:23:28Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

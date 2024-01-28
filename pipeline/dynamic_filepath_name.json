@@ -1,5 +1,5 @@
 {
-	"name": "Parameterize_Activity",
+	"name": "dynamic_filepath_name",
 	"properties": {
 		"activities": [
 			{
@@ -49,34 +49,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Parameterize_Activity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "source_dynamic_filepath_name",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Target_Parameterize_Activity",
+						"referenceName": "Target_dynamic_filepath_name",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Parameterize_Activity"
+			"name": "dynamic_filepath_name"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T17:29:04Z"
+		"lastPublishTime": "2024-01-27T16:50:04Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

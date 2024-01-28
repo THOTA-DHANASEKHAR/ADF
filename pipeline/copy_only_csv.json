@@ -1,5 +1,5 @@
 {
-	"name": "Parameterize_Activity",
+	"name": "copy_only_csv",
 	"properties": {
 		"activities": [
 			{
@@ -20,6 +20,7 @@
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -49,34 +50,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Parameterize_Activity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "source_copy_only_csv",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Target_Parameterize_Activity",
+						"referenceName": "Target_copy_only_csv",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Parameterize_Activity"
+			"name": "copy_only_csv"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T17:29:04Z"
+		"lastPublishTime": "2024-01-27T16:52:35Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -1,5 +1,5 @@
 {
-	"name": "Parameterize_Activity",
+	"name": "copy_csv_adls_2_adls",
 	"properties": {
 		"activities": [
 			{
@@ -49,34 +49,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Parameterize_Activity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "source_copy_csv_adls_2_adls",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Target_Parameterize_Activity",
+						"referenceName": "Target_copy_csv_adls_2_adls",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"filename": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "Parameterize_Activity"
+			"name": "copy_csv_adls_2_adls"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T17:29:04Z"
+		"lastPublishTime": "2024-01-27T16:45:37Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -1,5 +1,5 @@
 {
-	"name": "Parameterize_Activity",
+	"name": "Schedule_Triggers",
 	"properties": {
 		"activities": [
 			{
@@ -49,34 +49,28 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_Parameterize_Activity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FileName": {
-								"value": "@pipeline().parameters.filename",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "source_schedule_trigger",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Target_Parameterize_Activity",
+						"referenceName": "target_schedule_trigger",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"parameters": {
-			"filename": {
+			"scheduledTime": {
 				"type": "string"
 			}
 		},
 		"folder": {
-			"name": "Parameterize_Activity"
+			"name": "Triggers"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-01-27T17:29:04Z"
+		"lastPublishTime": "2024-01-27T16:26:08Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
