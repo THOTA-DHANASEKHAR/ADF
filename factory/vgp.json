@@ -1,0 +1,9 @@
+{
+	"name": "vgp",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b5297006-780c-4010-90ae-df90af99bd8e",
+		"tenantId": "724a5dbe-79d3-4f27-90d5-157ce61dd79d"
+	}
+}
