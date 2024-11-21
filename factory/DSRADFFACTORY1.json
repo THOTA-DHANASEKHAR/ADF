@@ -1,0 +1,9 @@
+{
+	"name": "DSRADFFACTORY1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bd1140da-ef4d-4aea-a4f4-f72b35caf28d",
+		"tenantId": "aac8721c-0556-428f-88bd-a18378ae1fd0"
+	}
+}
